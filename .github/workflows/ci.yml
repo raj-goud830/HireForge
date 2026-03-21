@@ -1,0 +1,56 @@
+name: SaaS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache-dependency-path: |
+          frontend/package-lock.json
+          backend/package-lock.json
+          
+    # Backend Install & Build
+    - name: Install Backend Dependencies
+      run: cd backend && npm ci
+      
+    - name: Build Backend (TypeScript)
+      run: cd backend && npm run build
+      
+    # Frontend Install & Build
+    - name: Install Frontend Dependencies
+      run: cd frontend && npm ci
+      
+    - name: Build Frontend (Next.js)
+      run: cd frontend && npm run build
+
+  deploy-backend:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy to Render / AWS (Placeholder)
+        run: echo "Add deployment scripts or AWS EB CLI commands here"
+
+  deploy-frontend:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy to Vercel (Placeholder)
+        run: echo "Add Vercel CLI deployment commands here using VERCEL_TOKEN"
