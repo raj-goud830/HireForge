@@ -5,7 +5,8 @@ HireForge is a full-stack SaaS application tailored for managing resumes, portfo
 ## ✨ Features
 
 - **📄 Resumes Management:** Create, manage, and track user resumes.
-- **🎨 Portfolios:** Build and maintain user portfolios to showcase work and projects.
+- **🎨 Portfolios:** Build and maintain user portfolios to showcase work and 
+projects.
 - **💼 Interviews Dashboards:** Track and manage job interviews seamlessly.
 - **🔒 Authentication:** Secure user authentication using [Clerk](https://clerk.dev).
 - **🤖 AI Integration:** Powered by the [OpenAI API](https://openai.com) for intelligent content and task assistance.
